@@ -6,6 +6,7 @@ import "./index.css";
 
 import Root from "./Root/Root";
 import Home from "./Home/Home";
+import Explore from "./Explore/Explore";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
+      {
+        path: '/explore',
+        element: <Explore></Explore>
+      }
     ],
   },
 ]);
