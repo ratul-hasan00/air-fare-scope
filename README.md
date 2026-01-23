@@ -2,7 +2,7 @@
 
 **AirfareScope** is a modern, responsive flight search web app that helps travelers find flights, filter by airlines, stops, and price, and explore curated destinations around the world.  
 
-✈️ **Live Demo:** [https://air-fare-scope-2yzumw4da-afiful-hasans-projects.vercel.app/](#)  
+✈️ **Live Demo:** [https://air-fare-scope.vercel.app/](#)  
 
 ---
 
