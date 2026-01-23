@@ -8,28 +8,53 @@ const SearchBar = ({ setFlights }) => {
   const [destinationCode, setDestinationCode] = useState("");
   const [date, setDate] = useState("");
   const [passengers, setPassengers] = useState(1);
-
   const [originOptions, setOriginOptions] = useState([]);
   const [destinationOptions, setDestinationOptions] = useState([]);
 
+
   useEffect(() => {
     if (originText.length < 2) return;
-    getAirportOptions(originText).then(setOriginOptions);
+    const timeout = setTimeout(() => {
+      getAirportOptions(originText).then(setOriginOptions);
+    }, 300);
+    return () => clearTimeout(timeout);
   }, [originText]);
 
   useEffect(() => {
     if (destinationText.length < 2) return;
-    getAirportOptions(destinationText).then(setDestinationOptions);
+    const timeout = setTimeout(() => {
+      getAirportOptions(destinationText).then(setDestinationOptions);
+    }, 300);
+    return () => clearTimeout(timeout);
   }, [destinationText]);
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    const flights = await searchFlights({
-      origin: originCode,
-      destination: destinationCode,
-      date,
+
+    const testOrigin = originCode || "JFK";
+    const testDestination = destinationCode || "LHR";
+    const testDate = date || "2026-02-01";
+
+    console.log("Searching flights with:", {
+      origin: testOrigin,
+      destination: testDestination,
+      date: testDate,
       passengers,
     });
+
+    const flights = await searchFlights({
+      origin: testOrigin,
+      destination: testDestination,
+      date: testDate,
+      passengers: Number(passengers),
+    });
+
+    console.log("Flight search result:", flights);
+
+    if (!flights || flights.length === 0) {
+      alert("No flights found.");
+    }
+
     setFlights(flights);
   };
 
@@ -40,7 +65,6 @@ const SearchBar = ({ setFlights }) => {
     >
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
 
-        {/* ORIGIN */}
         <div className="relative">
           <input
             value={originText}
@@ -49,7 +73,7 @@ const SearchBar = ({ setFlights }) => {
             className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-black transition-all"
           />
           {originOptions.length > 0 && (
-            <ul className="absolute bg-white border rounded-xl shadow-md mt-1 w-full z-10">
+            <ul className="absolute bg-white border rounded-xl shadow-md mt-1 w-full z-10 max-h-60 overflow-auto">
               {originOptions.map((a) => (
                 <li
                   key={a.id}
@@ -67,7 +91,6 @@ const SearchBar = ({ setFlights }) => {
           )}
         </div>
 
-        {/* DESTINATION */}
         <div className="relative">
           <input
             value={destinationText}
@@ -76,7 +99,7 @@ const SearchBar = ({ setFlights }) => {
             className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-black transition-all"
           />
           {destinationOptions.length > 0 && (
-            <ul className="absolute bg-white border rounded-xl shadow-md mt-1 w-full z-10">
+            <ul className="absolute bg-white border rounded-xl shadow-md mt-1 w-full z-10 max-h-60 overflow-auto">
               {destinationOptions.map((a) => (
                 <li
                   key={a.id}
@@ -93,34 +116,26 @@ const SearchBar = ({ setFlights }) => {
             </ul>
           )}
         </div>
-
-        {/* DATE */}
         <input
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
           className="p-3 border rounded-xl focus:ring-2 focus:ring-black"
         />
-
-        {/* PASSENGERS */}
         <select
           value={passengers}
-          onChange={(e) => setPassengers(e.target.value)}
+          onChange={(e) => setPassengers(Number(e.target.value))}
           className="p-3 border rounded-xl focus:ring-2 focus:ring-black"
         >
-          {[1,2,3,4,5].map(n => (
+          {[1, 2, 3, 4, 5].map((n) => (
             <option key={n} value={n}>
               {n} Passenger{n > 1 && "s"}
             </option>
           ))}
         </select>
-
-        {/* BUTTON */}
         <button
           type="submit"
-          className="bg-black text-white rounded-xl font-medium
-                     hover:scale-105 hover:bg-gray-900
-                     transition-transform duration-200"
+          className="bg-black text-white rounded-xl font-medium hover:scale-105 hover:bg-gray-900 transition-transform duration-200"
         >
           Search Flights
         </button>

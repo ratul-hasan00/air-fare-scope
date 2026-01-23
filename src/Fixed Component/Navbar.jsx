@@ -9,7 +9,7 @@ const Navbar = () => {
   const navLinks = [
     { name: "Flights", path: "/" },
     { name: "Explore", path: "/explore" },
-    { name: "Deals", path: "/deals" },
+    { name: "About Us", path: "/about" },
   ];
 
   return (

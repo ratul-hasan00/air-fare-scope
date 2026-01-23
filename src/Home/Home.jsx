@@ -1,14 +1,6 @@
 import { useState, useMemo } from "react";
 import SearchBar from "../Internal Component/SearchBar";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import Destination from "../Extra Component/Destination";
 import Deals from "../Extra Component/Deals";
 import Reviews from "../Extra Component/Reviews";
@@ -18,53 +10,39 @@ const Home = () => {
   const [flights, setFlights] = useState([]);
   const [selectedAirlines, setSelectedAirlines] = useState([]);
   const [selectedStops, setSelectedStops] = useState([]);
-  const [priceRange, setPriceRange] = useState([0, 1000]); // default min-max
-  const [timeRange, setTimeRange] = useState([0, 24]); // in hours
+  const [priceRange, setPriceRange] = useState([0, 1000]);
+  const [timeRange, setTimeRange] = useState([0, 24]);
 
-  // Extract dynamic values from flights
   const airlines = useMemo(() => {
     const all = flights.flatMap((f) => f.validatingAirlineCodes);
     return [...new Set(all)];
   }, [flights]);
-
   const stopsOptions = useMemo(() => {
     return [...new Set(flights.map((f) => f.itineraries[0].segments.length - 1))];
   }, [flights]);
-
   const minPrice = useMemo(() => {
     if (!flights.length) return 0;
     return Math.min(...flights.map((f) => parseFloat(f.price.total)));
   }, [flights]);
-
   const maxPrice = useMemo(() => {
     if (!flights.length) return 1000;
     return Math.max(...flights.map((f) => parseFloat(f.price.total)));
   }, [flights]);
-
-  // Filtered flights
   const filteredFlights = useMemo(() => {
     return flights.filter((f) => {
       const price = parseFloat(f.price.total);
       const stops = f.itineraries[0].segments.length - 1;
-
-      // Departure hour range
       const depHour = parseInt(f.itineraries[0].segments[0].departure.at.split("T")[1].slice(0, 2), 10);
-
       const airlineCheck =
         selectedAirlines.length === 0 ||
         f.validatingAirlineCodes.some((code) => selectedAirlines.includes(code));
-
       const stopsCheck =
         selectedStops.length === 0 || selectedStops.includes(stops);
-
       const priceCheck = price >= priceRange[0] && price <= priceRange[1];
       const timeCheck = depHour >= timeRange[0] && depHour <= timeRange[1];
-
       return airlineCheck && stopsCheck && priceCheck && timeCheck;
     });
   }, [flights, selectedAirlines, selectedStops, priceRange, timeRange]);
-
-  // Price bar chart data
   const priceData = useMemo(() => {
     if (!flights.length) return [];
     const step = Math.ceil((maxPrice - minPrice) / 5);
@@ -89,15 +67,9 @@ const Home = () => {
 
       {flights.length > 0 && (
         <div className="flex flex-col lg:flex-row gap-6">
-
-          {/* Sidebar: Filters + Bar Chart */}
           <div className="flex flex-col lg:w-80 gap-6">
-
-            {/* Filter Card */}
             <div className="bg-gray-100 p-6 rounded-2xl shadow-md space-y-6">
               <h2 className="text-lg font-bold mb-4">Filter Flights</h2>
-
-              {/* Airline Filter */}
               <div className="space-y-2">
                 <p className="font-medium">Airlines</p>
                 <div className="flex flex-wrap gap-2">
@@ -112,8 +84,8 @@ const Home = () => {
                         )
                       }
                       className={`px-3 py-1 rounded-xl border ${selectedAirlines.includes(a)
-                          ? "bg-black text-white"
-                          : "bg-white"
+                        ? "bg-black text-white"
+                        : "bg-white"
                         }`}
                     >
                       {a}
@@ -121,8 +93,6 @@ const Home = () => {
                   ))}
                 </div>
               </div>
-
-              {/* Stops Filter */}
               <div className="space-y-2">
                 <p className="font-medium">Stops</p>
                 <div className="flex gap-2">
@@ -137,8 +107,8 @@ const Home = () => {
                         )
                       }
                       className={`px-3 py-1 rounded-xl border ${selectedStops.includes(s)
-                          ? "bg-black text-white"
-                          : "bg-white"
+                        ? "bg-black text-white"
+                        : "bg-white"
                         }`}
                     >
                       {s}
@@ -146,8 +116,6 @@ const Home = () => {
                   ))}
                 </div>
               </div>
-
-              {/* Price Range Filter */}
               <div className="space-y-2">
                 <p className="font-medium">Price Range ({priceRange[0]} - {priceRange[1]})</p>
                 <input
@@ -159,8 +127,6 @@ const Home = () => {
                   className="w-full"
                 />
               </div>
-
-              {/* Flight Time Filter */}
               <div className="space-y-2">
                 <p className="font-medium">Departure Time (Hours)</p>
                 <input
@@ -173,8 +139,6 @@ const Home = () => {
                 />
               </div>
             </div>
-
-            {/* Bar Chart Card */}
             <div className="bg-gray-100 p-6 rounded-2xl shadow-md">
               <p className="font-medium mb-2">Price Distribution</p>
               <div className="h-64">
@@ -194,8 +158,6 @@ const Home = () => {
               </div>
             </div>
           </div>
-
-          {/* Flight Results */}
           <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredFlights.map((f, i) => {
               const segments = f.itineraries[0].segments;
@@ -220,14 +182,11 @@ const Home = () => {
                   key={i}
                   className="bg-white rounded-2xl shadow-md border hover:shadow-xl hover:scale-105 transition-all p-6 flex flex-col justify-between"
                 >
-                  {/* FROM → TO */}
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-2xl font-bold mb-4">
                     <span>{from}</span>
                     <span className="text-gray-400 text-xl transition-transform duration-200 hover:rotate-45">✈</span>
                     <span>{to}</span>
                   </div>
-
-                  {/* DEPARTURE / ARRIVAL */}
                   <div className="flex justify-between mb-4 text-sm text-gray-700">
                     <div className="flex flex-col items-start">
                       <span className="font-medium">Departure</span>
@@ -240,15 +199,11 @@ const Home = () => {
                       <span>{arrivalTime}</span>
                     </div>
                   </div>
-
-                  {/* DURATION + AIRLINE + STOPS */}
                   <div className="flex justify-between items-center mb-4 text-gray-500 text-sm">
                     <span>Duration: {duration}</span>
                     <span>Airline: {airline}</span>
                     <span>Stops: {stops}</span>
                   </div>
-
-                  {/* PRICE */}
                   <div className="flex justify-start">
                     <div className="border-2 border-black rounded-xl px-4 py-2 font-semibold">
                       {f.price.total} {f.price.currency}
@@ -258,7 +213,6 @@ const Home = () => {
               );
             })}
           </div>
-
         </div>
       )}
       <Destination />

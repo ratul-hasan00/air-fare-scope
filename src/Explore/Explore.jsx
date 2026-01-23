@@ -10,6 +10,7 @@ const Explore = () => {
     <main className="bg-gray-50 min-h-screen">
       {/* Explore Header */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-5 text-center">
+        <title>Explore</title>
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900">
           Explore the World with AirfareScope
         </h1>
