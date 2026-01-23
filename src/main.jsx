@@ -8,6 +8,7 @@ import Root from "./Root/Root";
 import Home from "./Home/Home";
 import Explore from "./Explore/Explore";
 import About from "./About Us/About";
+import Error from "./Error/Error";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: '*',
+        element:<Error></Error>
       },
       {
         path: '/explore',
