@@ -1,16 +1,31 @@
-# React + Vite
+# 🌍 AirfareScope
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**AirfareScope** is a modern, responsive flight search web app that helps travelers find flights, filter by airlines, stops, and price, and explore curated destinations around the world.  
 
-Currently, two official plugins are available:
+✈️ **Live Demo:** [https://air-fare-scope-2yzumw4da-afiful-hasans-projects.vercel.app/](#)  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🔧 Built With
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=white)
+![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Lucide React](https://img.shields.io/badge/Lucide_React-000000?style=for-the-badge&logo=react&logoColor=white)
+![Recharts](https://img.shields.io/badge/Recharts-FC5C5C?style=for-the-badge&logo=chartdotjs&logoColor=white)
+![Swiper.js](https://img.shields.io/badge/Swiper.js-007AFF?style=for-the-badge&logo=swiper&logoColor=white)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🎨 Features
+
+- 🛫 Search flights with autocomplete airports  
+- 💸 Filter flights by price, stops, and airlines  
+- 📊 Flight statistics with interactive bar charts  
+- 🌴 Curated beautiful & adventure destinations  
+- 📱 Fully responsive and mobile-friendly  
+
+---
+
+Made with ❤️ by **Md. Afiful Hasan Ratul**
